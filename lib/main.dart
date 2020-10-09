@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import './question.dart';
+import './answer.dart';
 
 void main() {
   runApp(MyPilotApp());
@@ -19,7 +20,7 @@ class _MyPilotAppState extends State<MyPilotApp> {
 
   void _answerQuestion() {
     setState(() {
-      _questionIndex = (_questionIndex + 1) % 2;
+      _questionIndex = (_questionIndex + 1) % 3;
     });
 
     print(_questionIndex);
@@ -28,8 +29,33 @@ class _MyPilotAppState extends State<MyPilotApp> {
   @override
   Widget build(BuildContext context) {
     var questions = [
-      'What\'s your favourite color?',
-      'What\'s your favourite animal?',
+      {
+        'questionText': 'What\'s your favourite color?',
+        'answers': [
+          'Black',
+          'Red',
+          'Green',
+          'White',
+        ],
+      },
+      {
+        'questionText': 'What\'s your favourite animal?',
+        'answers': [
+          'Dog',
+          'Cat',
+          'Rabbit',
+          'Lion',
+        ],
+      },
+      {
+        'questionText': 'Who\'s your favourite instructor?',
+        'answers': [
+          'henry',
+          'bob',
+          'jack',
+          'helen',
+        ],
+      },
     ];
     return MaterialApp(
       home: Scaffold(
@@ -39,20 +65,12 @@ class _MyPilotAppState extends State<MyPilotApp> {
         body: Column(
           children: [
             Question(
-              questions[_questionIndex],
+              questions[_questionIndex]['questionText'],
             ),
-            RaisedButton(
-              child: Text('Answer 1'),
-              onPressed: _answerQuestion,
-            ),
-            RaisedButton(
-              child: Text('Answer 2'),
-              onPressed: () => print('Answer 2 chosen'),
-            ),
-            RaisedButton(
-              child: Text('Answer 3'),
-              onPressed: _answerQuestion,
-            ),
+            ...(questions[_questionIndex]['answers'] as List<String>)
+                .map((answer) {
+              return Answer(_answerQuestion, answer);
+            }).toList(),
           ],
         ),
       ),
