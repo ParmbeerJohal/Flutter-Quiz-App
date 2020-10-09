@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import './question.dart';
-import './answer.dart';
+import './quiz.dart';
+import './result.dart';
 
 void main() {
   runApp(MyPilotApp());
@@ -17,7 +17,7 @@ class MyPilotApp extends StatefulWidget {
 
 class _MyPilotAppState extends State<MyPilotApp> {
   var _questionIndex = 0;
-  static const questions = [
+  static const _questions = [
     {
       'questionText': 'What\'s your favourite color?',
       'answers': [
@@ -62,24 +62,13 @@ class _MyPilotAppState extends State<MyPilotApp> {
         appBar: AppBar(
           title: Text('My First Pilot App!'),
         ),
-        body: _questionIndex < questions.length
-            ? Column(
-                children: [
-                  Question(
-                    questions[_questionIndex]['questionText'],
-                  ),
-                  ...(questions[_questionIndex]['answers'] as List<String>)
-                      .map((answer) {
-                    return Answer(_answerQuestion, answer);
-                  }).toList(),
-                ],
+        body: _questionIndex < _questions.length
+            ? Quiz(
+                answerQuestion: _answerQuestion,
+                questions: _questions,
+                questionIndex: _questionIndex,
               )
-            : Center(
-                child: Text(
-                  'You did it!',
-                  textScaleFactor: 3.0,
-                ),
-              ),
+            : Result(),
       ),
     );
   }
