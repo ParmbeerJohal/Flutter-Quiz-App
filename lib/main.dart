@@ -17,37 +17,83 @@ class MyPilotApp extends StatefulWidget {
 
 class _MyPilotAppState extends State<MyPilotApp> {
   var _questionIndex = 0;
+  var _totalScore = 0;
   static const _questions = [
     {
       'questionText': 'What\'s your favourite color?',
       'answers': [
-        'Black',
-        'Red',
-        'Green',
-        'White',
+        {
+          'text': 'Black',
+          'score': 5,
+        },
+        {
+          'text': 'White',
+          'score': 3,
+        },
+        {
+          'text': 'Red',
+          'score': 10,
+        },
+        {
+          'text': 'Blue',
+          'score': 8,
+        },
       ],
     },
     {
       'questionText': 'What\'s your favourite animal?',
       'answers': [
-        'Dog',
-        'Cat',
-        'Rabbit',
-        'Lion',
+        {
+          'text': 'Dog',
+          'score': 8,
+        },
+        {
+          'text': 'Cat',
+          'score': 1,
+        },
+        {
+          'text': 'Lion',
+          'score': 10,
+        },
+        {
+          'text': 'Monkey',
+          'score': 5,
+        },
       ],
     },
     {
       'questionText': 'Who\'s your favourite instructor?',
       'answers': [
-        'henry',
-        'bob',
-        'jack',
-        'helen',
+        {
+          'text': 'Michael Zastre',
+          'score': 4,
+        },
+        {
+          'text': 'Bill Bird',
+          'score': 6,
+        },
+        {
+          'text': 'Venkatesh Srinivasen',
+          'score': 8,
+        },
+        {
+          'text': 'Alex Thomo',
+          'score': 10,
+        },
       ],
     },
   ];
 
-  void _answerQuestion() {
+  void _resetQuiz() {
+    setState(() {
+      _questionIndex = 0;
+      _totalScore = 0;
+    });
+  }
+
+  void _answerQuestion(int score) {
+    _totalScore += score;
+
     setState(() {
       _questionIndex = _questionIndex + 1;
     });
@@ -68,7 +114,7 @@ class _MyPilotAppState extends State<MyPilotApp> {
                 questions: _questions,
                 questionIndex: _questionIndex,
               )
-            : Result(),
+            : Result(_totalScore, _resetQuiz),
       ),
     );
   }
